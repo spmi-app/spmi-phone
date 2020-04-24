@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Dashboard from '../screens/dashboard';
-import Content from "../screens/content"
-import Syllabus from "../screens/syllabus"
-
+import Content from '../screens/content';
+import Syllabus from '../screens/syllabus';
 import { Icon } from 'native-base';
 
 const Drawer = createDrawerNavigator();
@@ -15,7 +14,11 @@ export default () => (
       component={Dashboard}
       options={{
         drawerIcon: ({ focused, color, size }) => (
-          <DrawerIcon color={color} focused={focused} icon={{type: "MaterialIcons",name:"dashboard"}} />
+          <DrawerIcon
+            color={color}
+            focused={focused}
+            icon={{ type: 'MaterialIcons', name: 'dashboard' }}
+          />
         ),
         drawerLabel: 'Dashboard',
       }}
@@ -26,7 +29,11 @@ export default () => (
       options={{
         drawerLabel: 'Syllabus',
         drawerIcon: ({ focused, color, size }) => (
-          <DrawerIcon color={color} focused={focused}  icon={{type: "MaterialCommunityIcons",name:"clock"}} />
+          <DrawerIcon
+            color={color}
+            focused={focused}
+            icon={{ type: 'MaterialCommunityIcons', name: 'clock' }}
+          />
         ),
       }}
     />
@@ -36,7 +43,11 @@ export default () => (
       options={{
         drawerLabel: 'Content',
         drawerIcon: ({ focused, color, size }) => (
-          <DrawerIcon color={color} focused={focused}  icon={{type: "MaterialIcons",name:"chat", }} />
+          <DrawerIcon
+            color={color}
+            focused={focused}
+            icon={{ type: 'MaterialIcons', name: 'chat' }}
+          />
         ),
       }}
     />

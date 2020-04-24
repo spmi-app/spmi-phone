@@ -1,6 +1,14 @@
 platform :ios, '9.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
-
+  # Override Firebase SDK Version
+  $FirebaseSDKVersion = '6.8.1'
+  
+  # Override Fabric SDK Version
+  $FabricSDKVersion = '1.6.0'
+  
+  # Override Crashlytics SDK Version
+  $CrashlyticsSDKVersion = '3.1.0'
+  
 target 'spmi' do
   # Pods for spmi
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
@@ -33,8 +41,7 @@ target 'spmi' do
   pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
-  
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'  
   target 'spmiTests' do
     inherit! :search_paths
     # Pods for testing
