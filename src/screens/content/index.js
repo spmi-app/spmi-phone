@@ -36,7 +36,8 @@ const TagTabs = () => {
     ref.on(
       'value',
       snapshot => {
-        setDemoTabs(Object.values(snapshot.val()))
+        console.log(snapshot.val())
+        setDemoTabs(Object.values(snapshot.val()).sort((next,prev)=>next.order-prev.order))
       },
       function(errorObject) {
         console.log('The read failed: ' + errorObject.code);
@@ -49,7 +50,7 @@ const TagTabs = () => {
       <Tabs renderTabBar={() => <ScrollableTab />}>
         {demoTabs.map((tab, index) => (
           <Tab key={index} heading={tab.label}>
-            <List filter={tab.id} />
+            <List label={tab.label} filter={tab.id} />
           </Tab>
         ))}
       </Tabs>

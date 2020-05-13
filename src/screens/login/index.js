@@ -1,66 +1,59 @@
-import React, { useState } from 'react';
+import * as React from 'react';
+import { View, Alert } from 'react-native';
+import {
+  statusCodes,
+  GoogleSignin,
+  GoogleSigninButton,
+} from '@react-native-community/google-signin';
 
-import styles from './style';
+export default ({ navigation }) => {
+  React.useEffect(() => {
+    logout()
+  }, []);
 
-import { Dimensions, View, TouchableOpacity, Text } from 'react-native';
-import { TextField } from 'react-native-material-textfield';
+  const logout = async() => {
+    const isSignedIn = await GoogleSignin.isSignedIn();
+    if (isSignedIn) {
+      await GoogleSignin.signOut();
+    }
+  }
 
-const getToken =
-  'W0+m2Xb34P+Susy+kswsEIXUNxKQtSxJaqGmNK3F7ZEBIvLuIZSY0NzctubGp2YhtIdGJqD/HwEo6ZV677bGxQ==';
-
-const EnterScreen = ({ navigation, error }) => {
-  const [login, setLogin] = useState('');
-  const [password, setPassword] = useState('');
-
-  const enter = async () => {
+  const signIn = async () => {
     try {
-      const form = new FormData();
-
-      form.append('unique_id', login);
-      form.append('password', password);
-      form.append('authenticity_token', getToken);
-
-      const request = await fetch('https://canvas.cornell.edu/login/canvas', {
-       // headers: { authorization: `Bearer ${getToken}` },
-        method: 'POST',
-        body: form,
-      });
-      console.log({request})
-      const json = await request.blob();
-
-      console.log({json})
-    } catch (err) {
-      console.log({ err });
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      if (userInfo.user.email.includes('cornell')) {
+        navigation.jumpTo('Content')
+      } else {
+        Alert.alert(
+          "Sorry that is not part of сornell domain",
+          "Please user correct account",
+          [
+            { text: "OK", onPress: () => logout() }
+          ],
+          { cancelable: false }
+        );
+      }
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
     }
   };
 
   return (
-    <View style={styles.bodyCenter}>
-      <View style={styles.form}>
-        <TextField
-          containerStyle={{ width: 300 }}
-          label="Login"
-          maxLength={30}
-          value={login}
-          onChangeText={setLogin}
-          keyboardType={'email-address'}
-          autoCapitalize="none"
-        />
-        <TextField
-          containerStyle={{ width: 300 }}
-          label="Password"
-          maxLength={30}
-          value={password}
-          onChangeText={setPassword}
-        />
-        <TouchableOpacity
-          onPress={enter}
-          style={styles.pseudoButton}>
-          <Text style={styles.pseudoLink}>Login</Text>
-        </TouchableOpacity>
-      </View>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <GoogleSigninButton
+        style={{ width: 192, height: 48 }}
+        size={GoogleSigninButton.Size.Wide}
+        color={GoogleSigninButton.Color.Dark}
+        onPress={signIn}
+      />
     </View>
   );
 };
-
-export default EnterScreen;

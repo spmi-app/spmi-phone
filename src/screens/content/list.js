@@ -9,14 +9,14 @@ const ref = database().ref('/contents/');
 // To-do think bout binary search on Firebase realtime database
 const searchKey = ['title', 'description'];
 
-export default ({ filter }) => {
+export default ({ filter, label }) => {
   const [renderData, setRender] = useState([]);
   const [serverData, setData] = useState([]);
   const [textFilter, setText] = useState('');
 
   const setDataForList = snapshot => {
     setData(
-      Object.values(snapshot.val() || {}).filter(item =>
+      Object.values(snapshot.val() || {}).sort((next,prev)=>next.order-prev.order).filter(item =>
         item.tags.includes(filter),
       ),
     );
@@ -48,7 +48,7 @@ export default ({ filter }) => {
         <Input
           onChangeText={text => setText(text)}
           value={textFilter}
-          placeholder="What are you facing?"
+          placeholder={`Search in ${label}`}
         />
       </Item>
       <FlatList
