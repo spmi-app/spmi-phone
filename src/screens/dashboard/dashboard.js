@@ -1,7 +1,9 @@
 import * as React from 'react';
-import {  View } from 'react-native';
+import { View } from 'react-native';
 
-export default ({ navigation }) => (
-  <View style={{ flex: 1, flexDirection: 'column-reverse' }}>
-  </View>
-);
+
+export default ({ navigation }) => {
+
+  return <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+</View>
+}

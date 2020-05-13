@@ -11,6 +11,7 @@
     "flow": "flow"
   },
   "dependencies": {
+    "@react-native-community/google-signin": "^4.0.0",
     "@react-native-community/masked-view": "^0.1.5",
     "@react-native-firebase/app": "^6.3.4",
     "@react-native-firebase/database": "^6.3.4",
